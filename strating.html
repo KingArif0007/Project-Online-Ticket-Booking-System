@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recognition Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('../img/bg5.png');
+        }
+        .login-container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 3px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-top: 16%;
+            background: none;
+            box-shadow: 5px 5px 5px black;
+        }
+        h2 {
+            text-align: center;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: black;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #voice-button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2> <i class="fa-solid fa-lock"></i>  Login</h2>
+        <button id="voice-button">Tell The Magical word To Login  <i class="fa-solid fa-user-secret"></i> </button>
+    </div>
+
+    <script>
+        const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+        recognition.lang = 'en-US';
+
+        document.getElementById('voice-button').addEventListener('click', () => {
+            recognition.start();
+        });
+
+        recognition.onresult = (event) => {
+            const result = event.results[0][0].transcript.toLowerCase();
+            if (result.includes('login')) {
+                alert('Voice Login Successful!');
+                
+                window.open('home page.html');
+            } else {
+                alert('Voice Login Failed! Please say "login" to proceed.');
+            }
+        };
+
+        recognition.onerror = (event) => {
+            console.error('Speech recognition error detected: ' + event.error);
+        };
+    </script>
+</body>
+</html>
